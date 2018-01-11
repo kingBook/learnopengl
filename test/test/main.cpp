@@ -2,13 +2,17 @@
 #include <GLFW/glfw3.h>
 
 #include <iostream>
+#include "HelloTriangle.h"
+using namespace std;
 
 void framebuffer_size_callback(GLFWwindow* window,int width,int height);
+int main();
 void processInput(GLFWwindow *window);
 
 // settings
 const unsigned int SCR_WIDTH=800;
 const unsigned int SCR_HEIGHT=600;
+
 
 int main()
 {
@@ -43,6 +47,9 @@ int main()
 		return -1;
 	}
 
+	HelloTriangle helloTriange;
+	helloTriange.onBuildAndCompileShader();
+	
 	// render loop
 	// -----------
 	while(!glfwWindowShouldClose(window))
@@ -51,16 +58,22 @@ int main()
 		// -----
 		processInput(window);
 
+		
 		// render
 		// ------
 		glClearColor(0.2f,0.3f,0.3f,1.0f);
 		glClear(GL_COLOR_BUFFER_BIT);
+
+		helloTriange.onDraw();
+
 
 		// glfw: swap buffers and poll IO events (keys pressed/released, mouse moved etc.)
 		// -------------------------------------------------------------------------------
 		glfwSwapBuffers(window);
 		glfwPollEvents();
 	}
+
+	helloTriange.onGLDelete();
 
 	// glfw: terminate, clearing all previously allocated GLFW resources.
 	// ------------------------------------------------------------------
@@ -83,4 +96,5 @@ void framebuffer_size_callback(GLFWwindow* window,int width,int height)
 	// make sure the viewport matches the new window dimensions; note that width and 
 	// height will be significantly larger than specified on retina displays.
 	glViewport(0,0,width,height);
+	
 }
